@@ -39,7 +39,7 @@ db.'database'.'call'(), function(error, found){
 */
 
 app.get('/scrape', function(request, response){
-    axios.get('HTTP ADRESS').then(function(response){
+    axios.get('https://www.nytimes.com/section/us').then(function(response){
         var $ = cheerio.load(response.data);
         $('.title').each(function(i, element){
             var title = $(element).children('a').text();

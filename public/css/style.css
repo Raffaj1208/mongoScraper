@@ -1,0 +1,20 @@
+#nav{
+    font-size: xx-large;
+    font-weight: bolder;
+    text-align: center;
+    height: max-content; width: max-content;
+}
+button{
+    float: right;
+}
+#results{
+    height: 100px; width: 500px;
+    background-color: black;
+    color: white;
+}
+#art{
+    float: left;
+}
+#com{
+    float: right;
+}
