@@ -1,4 +1,0 @@
-function displayResults(){
-    $('tbody').empty();
-    
-};
