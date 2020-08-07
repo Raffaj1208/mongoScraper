@@ -11,9 +11,20 @@ var ArticleSchema = new Schema ({
         type: String,
         required: true
     },
+    summary: {
+        type: String,
+        required: false
+    },
     note: {
-        type: mongoose.SchemaType.Types.ObjectId,
-        ref: 'Note'
+        type:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Note'
+        }],
+        Article: String
+    },
+    saved: {
+        type: Boolean,
+        default: false
     }
 });
 
