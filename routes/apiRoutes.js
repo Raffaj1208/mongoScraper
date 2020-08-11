@@ -1,38 +1,38 @@
 var axios = require('axios');
 var cheerio = require('cheerio');
-var db = require('../models');
 var mongojs = require('mongojs');
+var express = require('express');
+var app = express();
 
-var dbUrl = 'scraper';
-var collections = 'scrapedData';
-var db = mongojs(dbUrl, collections);
+var databaseUrl = 'scraper';
+var collections = ['scrapedData'];
+var db = mongojs(databaseUrl, collections);
 
 db.on('error', function(error){
-    console.log('Database Error: ', error);
+    console.log("Database Error: " + error);
 });
 
-app.get('/scrape', function(request, response){
-    axios.get('https://www.nytimes.com/section/us').then(function(response){
+app.get('/scrape', function(req, res){
+    axios.get('https://news.ycombinator.com/').then(function(response){
         var $ = cheerio.load(response.data);
-        $('.title').each(function(i, element){
+        $('#results').each(function(i, element){
             var title = $(element).children('a').text();
             var link = $(element).children('a').attr('href');
-
             if (title && link) {
-                db.scrapeData.insert({
+                db.scrapedData.insert({
                     title: title,
                     link: link
                 },
-                function(error, inserted){
-                    if (error){
-                        console.log(error);
+                function(err, inserted){
+                    if (err){
+                        console.log(err);
                     }
                     else {
                         console.log(inserted);
                     }
+                });
+            }
         });
-    }
     });
-});
-response.send('Scrape Complete');
+    res.send('This is working');
 });
