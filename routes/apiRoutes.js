@@ -1,19 +1,16 @@
 const request = require("request");
-const mongoose = require('mongoose');
 const cheerio = require("cheerio");
 const db = require("../models");
+const mongoose = require('mongoose');
 
 module.exports = function (app) {
-
     app.get('/articles', function (req, res) {
         request("https://www.theverge.com/", function(error, response, html) {
 
             const $ = cheerio.load(html);
-
             const results = [];
             
             $("a.story-link").each(function(i, element) {
-
                 const link = $(element).attr("href");
                 const title = $($(element).find("h2.headline")[0]).text().trim();
                 const summary = $($(element).find("p.summary")[0]).text().trim();
@@ -36,7 +33,6 @@ module.exports = function (app) {
                 res.json(dbData);
             });
         });
-
     });
 
     app.put("/save-article/:articleId", function(req, res) {
@@ -83,7 +79,6 @@ module.exports = function (app) {
           .catch(function(err) {
             res.json(err);
           });
-      
       });
 
       app.delete("/delete-note/:noteId", function (req, res) {
@@ -91,8 +86,5 @@ module.exports = function (app) {
             if (err) return res.status(500).send(err);
             return res.status(200).send();
         });
-
     });
-        
-
 };
