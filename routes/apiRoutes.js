@@ -10,15 +10,18 @@ module.exports = function (app) {
             const $ = cheerio.load(html);
             const results = {};
             
-            $("a.story-link").each(function(i, element) {
+            $(".c-entry-box--compact__title").each(function(i, element) {
                 const link = $(element).attr("href");
                 const title = $($(element).find("h2.headline")[0]).text().trim();
                 const summary = $($(element).find("p.summary")[0]).text().trim();
-                results.push({
-                link: link,
-                title: title,
-                summary: summary
-                });
+                
+                if (link && title && summary){
+                    results.push({
+                        link: link,
+                        title: title,
+                        summary: summary
+                        });
+                }
             });
 
             db.Article.create(results)
@@ -31,8 +34,7 @@ module.exports = function (app) {
                 });
                 
             db.Article.find({}).then(function(dbData){
-                console.log("DB DATA --------------------, ", dbData)
-               return res.json(dbData);
+                console.log(dbData);
             });
         });
     });
