@@ -8,7 +8,7 @@ module.exports = function (app) {
         request("https://www.theverge.com/", function(error, response, html) {
 
             const $ = cheerio.load(html);
-            const results = [];
+            const results = {};
             
             $("a.story-link").each(function(i, element) {
                 const link = $(element).attr("href");
@@ -23,6 +23,8 @@ module.exports = function (app) {
 
             db.Article.create(results)
                 .then(function(dbArticle) {
+                    res.render('index', {dbArticle});
+                    console.log(dbArticle);
                 })
                 .catch(function(err) {
                 return res.json(err);
@@ -30,7 +32,7 @@ module.exports = function (app) {
                 
             db.Article.find({}).then(function(dbData){
                 console.log("DB DATA --------------------, ", dbData)
-                res.json(dbData);
+               return res.json(dbData);
             });
         });
     });
