@@ -4,17 +4,64 @@ const db = require("../models");
 const mongoose = require('mongoose');
 
 module.exports = function (app) {
+
+    app.get("/articles", function(req, res) {
+        request("https://arstechnica.com/", function(error, response, html) {
+          var $ = cheerio.load(html);
+          var titlesArray = [];
+      
+          $("li.article").each(function(i, element) {
+            var result = {};
+
+         result.link = $(element).find('a.overlay').attr("href");
+         result.title = $(element).find("h2").text().split()[0];
+         result.summary = $(element).find('p.excerpt').text().trim();
+            
+         if (result.title !== "" && result.link !== "") {
+              if (titlesArray.indexOf(result.title) == -1) {
+                titlesArray.push(result.title);
+      
+                db.Article.count({ title: result.title }, function(err, test) {
+                  if (test === 0) {
+                    var entry = new Article(result);
+      
+                    entry.save(function(err, doc) {
+                      if (err) {
+                        console.log(err);
+                      } else {
+                        console.log(doc);
+                      }
+                    });
+                  }
+                });
+              } else {
+                console.log("Article already exists.");
+              }
+            } else {
+              console.log("Not saved to DB, missing data");
+            }
+          });
+          res.redirect("/");
+        });
+      });
+
+/*
     app.get('/articles', function (req, res) {
-        request("https://www.theverge.com/", function(error, response, html) {
+        request("https://arstechnica.com/", function(error, response, html) {
 
             const $ = cheerio.load(html);
             const results = {};
             
-            $(".c-entry-box--compact__title").each(function(i, element) {
-                const link = $(element).attr("href");
-                const title = $($(element).find("h2.headline")[0]).text().trim();
-                const summary = $($(element).find("p.summary")[0]).text().trim();
-                
+            $("li.article").each(function(i, element) {
+                const link = $(element).find('a.overlay').attr('href');
+                const title = $(element).find('h2').text().split()[0];
+                const summary = $(element).find('p.excerpt').text().trim();
+            
+              
+                // result.link = $(element).find('a.overlay').attr("href");
+                // result.title = $(element).find("h2").text().split()[0];
+                // result.summary = $(element).find('p.excerpt').text().trim();
+            
                 if (link && title && summary){
                     results.push({
                         link: link,
@@ -38,6 +85,7 @@ module.exports = function (app) {
             });
         });
     });
+*/
 
     app.put("/save-article/:articleId", function(req, res) {
         db.Article.findByIdAndUpdate(req.params.articleId, {    $set: { saved: true }
