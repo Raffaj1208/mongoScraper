@@ -73,7 +73,11 @@ module.exports = function (app) {
           console.log(dbArticle);
       }).catch(function(error){
           console.log(error);
-      })
+          db.Article.find({}).then(function(dbData){
+            console.log(dbData)
+            res.json(dbData);
+        });
+      });
   });
 
     });
