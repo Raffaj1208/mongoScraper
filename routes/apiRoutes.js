@@ -1,10 +1,11 @@
 var request = require("request");
 var cheerio = require("cheerio");
-var db = require("../models");
+var db = require("../model");
 var mongoose = require('mongoose');
+var axios = require('axios');
 
 module.exports = function (app) {
-
+/*
     app.get("/articles", function(req, res) {
         request("https://arstechnica.com/", function(error, response, html) {
           var $ = cheerio.load(html);
@@ -44,48 +45,39 @@ module.exports = function (app) {
           res.redirect("/");
         });
       });
+      */
 
-/*
+
     app.get('/articles', function (req, res) {
-        request("https://arstechnica.com/", function(error, response, html) {
+        
+    axios.get('https://www.arstechnica.com/gadgets/').then(urlResponse =>{
+      var $ = cheerio.load(urlResponse.data);
+      var results = [];
 
-            const $ = cheerio.load(html);
-            const results = {};
-            
-            $("li.article").each(function(i, element) {
-                const link = $(element).find('a.overlay').attr('href');
-                const title = $(element).find('h2').text().split()[0];
-                const summary = $(element).find('p.excerpt').text().trim();
-            
-              
-                // result.link = $(element).find('a.overlay').attr("href");
-                // result.title = $(element).find("h2").text().split()[0];
-                // result.summary = $(element).find('p.excerpt').text().trim();
-            
-                if (link && title && summary){
-                    results.push({
-                        link: link,
-                        title: title,
-                        summary: summary
-                        });
-                }
-            });
+      $('li.article').each((i, element) =>{
+          var link = $(element).find('a.overlay').attr('href');
+          var title = $(element).find('a').text().split('    \n')[0];
+          var summary = $($(element).find("p.excerpt")[0]).text().trim();
 
-            db.Article.create(results)
-                .then(function(dbArticle) {
-                    res.render('index', {dbArticle});
-                    console.log(dbArticle);
-                })
-                .catch(function(err) {
-                return res.json(err);
-                });
-                
-            db.Article.find({}).then(function(dbData){
-                console.log(dbData);
-            });
-        });
+          if (link && title && summary){
+              results.push({
+                  link: link,
+                  title: title,
+                  summary: summary
+              });
+          }
+          console.log(results);
+      });
+      db.Article.create(results).then(function(dbArticle){
+          results.render({dbArticle});
+          console.log(dbArticle);
+      }).catch(function(error){
+          console.log(error);
+      })
+  });
+
     });
-*/
+
 
     app.put("/save-article/:articleId", function(req, res) {
         db.Article.findByIdAndUpdate(req.params.articleId, {    $set: { saved: true }
