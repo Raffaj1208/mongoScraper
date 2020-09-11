@@ -1,13 +1,13 @@
 require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const request = require('request');
-const cheerio = require('cheerio');
+var express = require('express');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var request = require('request');
+var cheerio = require('cheerio');
 
 var PORT = process.env.PORT || 3000;
 
-const app = express();
+var app = express();
 
 app.use(express.static('public'));
 

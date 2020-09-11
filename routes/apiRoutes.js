@@ -1,7 +1,7 @@
-const request = require("request");
-const cheerio = require("cheerio");
-const db = require("../models");
-const mongoose = require('mongoose');
+var request = require("request");
+var cheerio = require("cheerio");
+var db = require("../models");
+var mongoose = require('mongoose');
 
 module.exports = function (app) {
 
