@@ -5,33 +5,33 @@ $("#scrapeButton").on("click", function () {
     }).then(function(response) {
         console.log(response);
 
-        var articleResults = $("#results");
+        const articleResults = $("#results");
         articleResults.empty();
 
         for (i = 0; i < response.length; i++) {
-            var article = response[i];
+            const article = response[i];
 
-            var saveButton = $("<button>")
+            const saveButton = $("<button>")
                 .addClass("saveButton")
                 .text("Save")
                 .attr("id", article._id);
 
-            var title = $("<div>")
+            const title = $("<div>")
                 .addClass("title")
                 .text(article.title)
                 .append(saveButton);
 
-            var link = $("<a>")
+            const link = $("<a>")
                 .addClass("link")
                 .text(article.link)
                 .attr("href", article.link)
                 .attr("target", "_blank");
 
-            var summary = $("<p>")
+            const summary = $("<p>")
                 .addClass("summary")
                 .text(article.summary)
 
-            var listItem = $("<li>")
+            const listItem = $("<li>")
                 .addClass("article")
                 .append(title, link, summary);
 
@@ -56,11 +56,11 @@ $(document).on("click", '.saveButton', function(){
     });
 });
 
-var hideContainer = function() {
+const hideContainer = function() {
     $("#container").hide();
 
 };
 
-var showScrapeResults = function() {
+const showScrapeResults = function() {
     $("#scrapeResults").show(600);
 };

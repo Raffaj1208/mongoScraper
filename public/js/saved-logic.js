@@ -166,4 +166,6 @@ const displaySaved = function() {
     });
 };
 
-displaySaved();
+$(document).ready(function(){      
+    displaySaved(); 
+});
