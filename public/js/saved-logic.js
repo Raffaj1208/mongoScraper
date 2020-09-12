@@ -1,10 +1,10 @@
 var articleIdFromNote;
 
-var clearTextField = function() {
+const clearTextField = function() {
     document.getElementById('noteTextInput').value="";
 };
 
-var deleteSavedArticle = function(articleId) {
+const deleteSavedArticle = function(articleId) {
 
     $.ajax({
         type: "PUT",
@@ -15,7 +15,7 @@ var deleteSavedArticle = function(articleId) {
     });
  };
 
-var saveNewNote = function(articleId) {
+const saveNewNote = function(articleId) {
     var newNoteText = $("#noteTextInput").val();
     console.log(newNoteText);
     $.ajax({
@@ -37,10 +37,10 @@ var displayNotes = function(articleId) {
         document.getElementById("saved").style.display="none";
         document.getElementById("notes").style.display="block";
         
-        var saveNoteInput = $("#button-addon4");
+        const saveNoteInput = $("#button-addon4");
         saveNoteInput.empty();
         
-        var saveNewNoteButton = $("<button>")
+        const saveNewNoteButton = $("<button>")
             .attr("id", articleId)
             .addClass("saveNoteButton")
             .attr("type", "button")
@@ -48,25 +48,25 @@ var displayNotes = function(articleId) {
         
         saveNoteInput.append(saveNewNoteButton);
         
-        var savedNotes = $("#savedArticleNotes");
+        const savedNotes = $("#savedArticleNotes");
         savedNotes.empty();
 
         console.log(response);
         
-        for (var i = 0; i < response.note.length; i++) {
+        for (i = 0; i < response.note.length; i++) {
             var savedNote = response.note[i];;
             console.log(savedNote);
 
-            var deleteNoteButton = $("<button>")
+            const deleteNoteButton = $("<button>")
                 .addClass("deleteNoteButton")
                 .text("Delete")
                 .attr("id", savedNote._id);
 
-            var noteText = $("<p>")
+            const noteText = $("<p>")
                 .addClass("noteText")
                 .text(savedNote.body);
 
-            var listItem = $("<li>")
+            const listItem = $("<li>")
                 .addClass("articleNote")
                 .append(noteText, deleteNoteButton);
 
@@ -96,7 +96,7 @@ var displayNotes = function(articleId) {
     });
 };
 
-var deleteNote = function(noteId) {
+const deleteNote = function(noteId) {
     $.ajax({
         type: "DELETE",
         url: "/delete-note/" + noteId
@@ -105,46 +105,46 @@ var deleteNote = function(noteId) {
     });
 };
 
-var displaySaved = function() {
+const displaySaved = function() {
     $.ajax({
         type:"GET",
         url:"/display-saved/"
     }).then(function(response) {
         console.log(response);
 
-        var savedArticleResults = $("#savedArticles");
+        const savedArticleResults = $("#savedArticles");
         savedArticleResults.empty();
 
         for (i = 0; i < response.length; i++) {
-            var savedArticle = response[i];
+            const savedArticle = response[i];
 
-            var deleteButton = $("<button>")
+            const deleteButton = $("<button>")
                 .addClass("deleteButton")
                 .text("Delete")
                 .attr("id", savedArticle._id);
 
-            var notesButton = $("<button>")
+            const notesButton = $("<button>")
                 .addClass("notesButton")
-                .text("Comments")
+                .text("Notes")
                 .attr("id", savedArticle._id);
 
-            var title = $("<div>")
+            const title = $("<div>")
                 .addClass("title")
                 .text(savedArticle.title)
                 .append(deleteButton)
                 .append(notesButton);
 
-            var link = $("<a>")
+            const link = $("<a>")
                 .addClass("link")
                 .text(savedArticle.link)
                 .attr("href", savedArticle.link)
                 .attr("target", "_blank");
 
-            var summary = $("<p>")
+            const summary = $("<p>")
                 .addClass("summary")
                 .text(savedArticle.summary);
 
-            var listItem = $("<li>")
+            const listItem = $("<li>")
                 .addClass("article")
                 .append(title, link, summary);
 
@@ -166,6 +166,4 @@ var displaySaved = function() {
     });
 };
 
-$(document).ready(function(){      
-    displaySaved(); 
-});
+displaySaved();
