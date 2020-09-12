@@ -5,50 +5,7 @@ var mongoose = require('mongoose');
 var axios = require('axios');
 
 module.exports = function (app) {
-/*
-    app.get("/articles", function(req, res) {
-        request("https://arstechnica.com/", function(error, response, html) {
-          var $ = cheerio.load(html);
-          var titlesArray = [];
-      
-          $("li.article").each(function(i, element) {
-            var result = {};
-
-         result.link = $(element).find('a.overlay').attr("href");
-         result.title = $(element).find("h2").text().split()[0];
-         result.summary = $(element).find('p.excerpt').text().trim();
-            
-         if (result.title !== "" && result.link !== "") {
-              if (titlesArray.indexOf(result.title) == -1) {
-                titlesArray.push(result.title);
-      
-                db.Article.count({ title: result.title }, function(err, test) {
-                  if (test === 0) {
-                    var entry = new Article(result);
-      
-                    entry.save(function(err, doc) {
-                      if (err) {
-                        console.log(err);
-                      } else {
-                        console.log(doc);
-                      }
-                    });
-                  }
-                });
-              } else {
-                console.log("Article already exists.");
-              }
-            } else {
-              console.log("Not saved to DB, missing data");
-            }
-          });
-          res.redirect("/");
-        });
-      });
-      */
-
-
-    app.get('/articles', function (req, res) {
+  app.get('/articles', function (req, res) {
         
     axios.get('https://www.arstechnica.com/gadgets/').then(urlResponse =>{
       var $ = cheerio.load(urlResponse.data);
