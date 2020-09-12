@@ -53,7 +53,7 @@ var displayNotes = function(articleId) {
 
         console.log(response);
         
-        for (i = 0; i < response.note.length; i++) {
+        for (var i = 0; i < response.note.length; i++) {
             var savedNote = response.note[i];;
             console.log(savedNote);
 
