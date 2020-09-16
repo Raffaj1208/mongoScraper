@@ -27,18 +27,6 @@ db.once("open", function() {
   console.log("Connected to Mongoose!");
 });
 
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://userdb:password01@cluster0.hl9yc.mongodb.net/scraperNews?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
-
-
-
 app.listen(PORT, function () {
     console.log('Listening on : ' + PORT);
 });
