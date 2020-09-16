@@ -2,8 +2,6 @@ require('dotenv').config();
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var request = require('request');
-var cheerio = require('cheerio');
 
 var PORT = process.env.PORT || 3000;
 
