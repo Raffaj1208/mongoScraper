@@ -21,11 +21,11 @@ require('./routes/htmlRoutes')(app);
 
 var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scraperNews';
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
-  console.log("Connected to Mongoose!");
-});
+// var db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", function() {
+//   console.log("Connected to Mongoose!");
+// });
 
 app.listen(PORT, function () {
     console.log('Listening on : ' + PORT);
