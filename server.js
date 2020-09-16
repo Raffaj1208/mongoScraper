@@ -19,7 +19,7 @@ app.use(bodyParser.text({ type: 'text/html' }));
 require('./routes/apiRoutes')(app);
 require('./routes/htmlRoutes')(app);
 
-var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scraper_news';
+var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scraperNews';
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
