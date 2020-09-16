@@ -25,12 +25,12 @@ module.exports = function (app) {
           }
           console.log(results);
       });
-      db.Article.create(results).then(function(dbArticle){
+    db.Article.create(results).then(function(dbArticle){
           results.render({dbArticle});
           console.log(dbArticle);
       }).catch(function(error){
           console.log(error);
-          db.Article.find({}).then(function(dbData){
+    db.Article.find({}).then(function(dbData){
             console.log(dbData)
             res.json(dbData);
         });
